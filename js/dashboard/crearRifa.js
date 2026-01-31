@@ -1,4 +1,6 @@
 import { supabase } from "../supabase.js";
+import { validarCifrasPorPlan } from "../plans/planRules.js";
+import { calcularTotalNumeros } from "../utils/numeros.js";
 
 // ==============================
 // 📄 ELEMENTOS
@@ -7,33 +9,9 @@ const form = document.getElementById("crearRifaForm");
 const modalRifa = document.getElementById("modalRifa");
 
 // ==============================
-// ⚙️ CONFIGURACIÓN FUTURA (PLANES)
+// ⚙️ PLAN DEL USUARIO (FUTURO: profiles)
 // ==============================
-// Por ahora todos los usuarios son FREE
-// Luego vendrá de la tabla profiles (user.plan)
 const userPlan = "free";
-// free    → solo 2 cifras
-// basic   → 2 y 3 cifras
-// premium → 2, 3 y 4 cifras
-
-// ==============================
-// 🔢 VALIDAR CIFRAS SEGÚN PLAN
-// ==============================
-function validarCifrasPorPlan(cifras, plan) {
-  if (plan === "free" && cifras > 2) return false;
-  if (plan === "basic" && cifras > 3) return false;
-  return true;
-}
-
-// ==============================
-// 🧠 CALCULAR TOTAL DE NÚMEROS
-// ==============================
-function calcularTotalNumeros(cifras) {
-  if (cifras === 2) return 100;
-  if (cifras === 3) return 1000;
-  if (cifras === 4) return 10000;
-  return 0;
-}
 
 // ==============================
 // 📝 SUBMIT FORM
@@ -42,7 +20,9 @@ if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // 📥 DATOS DEL FORM
+    // ==============================
+    // 📥 DATOS
+    // ==============================
     const titulo = document.getElementById("titulo").value.trim();
     const descripcion = document.getElementById("descripcion").value.trim();
     const precio = Number(document.getElementById("precio").value);
@@ -53,7 +33,7 @@ if (form) {
     );
 
     // ==============================
-    // 🛑 VALIDACIONES BÁSICAS
+    // 🛑 VALIDACIONES
     // ==============================
     if (!titulo || !precio || !cifras) {
       alert("Completa todos los campos obligatorios");
@@ -65,9 +45,6 @@ if (form) {
       return;
     }
 
-    // ==============================
-    // 🔒 VALIDACIÓN POR PLAN
-    // ==============================
     if (!validarCifrasPorPlan(cifras, userPlan)) {
       alert(
         "Tu plan no permite crear rifas con esta cantidad de cifras.\nActualiza tu plan para desbloquear esta opción."
@@ -75,29 +52,24 @@ if (form) {
       return;
     }
 
-    // ==============================
-    // 🔢 TOTAL DE NÚMEROS
-    // ==============================
     const totalNumeros = calcularTotalNumeros(cifras);
 
     // ==============================
     // 👤 SESIÓN
     // ==============================
-    const {
-      data: { session },
-      error: sessionError
-    } = await supabase.auth.getSession();
+    const { data: { session } } = await supabase.auth.getSession();
 
-    if (sessionError || !session) {
-      alert("Sesión no válida. Vuelve a iniciar sesión.");
+    if (!session) {
+      alert("Sesión no válida");
       return;
     }
 
     // ==============================
-    // 💾 GUARDAR RIFA
+    // 💾 CREAR RIFA
     // ==============================
-    const { error } = await supabase.from("rifas").insert([
-      {
+    const { data: rifa, error: rifaError } = await supabase
+      .from("rifas")
+      .insert([{
         user_id: session.user.id,
         titulo,
         descripcion,
@@ -105,18 +77,45 @@ if (form) {
         cifras,
         total_numeros: totalNumeros,
         fecha_cierre: fechaCierre
-      }
-    ]);
+      }])
+      .select()
+      .single();
 
-    if (error) {
-      alert("Error al crear la rifa: " + error.message);
+    if (rifaError || !rifa) {
+      alert("Error al crear la rifa: " + rifaError.message);
       return;
     }
 
     // ==============================
-    // ✅ ÉXITO
+    // 🔢 CREAR NÚMEROS (PRODUCCIÓN)
     // ==============================
-    alert("Rifa creada correctamente");
+    const numeros = [];
+
+    for (let i = 0; i < totalNumeros; i++) {
+      numeros.push({
+        rifa_id: rifa.id,
+        numero: String(i).padStart(cifras, "0"),
+        estado: "libre"
+      });
+    }
+
+    // Insertar en bloques (seguro)
+    const BLOQUE = 500;
+    for (let i = 0; i < numeros.length; i += BLOQUE) {
+      const { error } = await supabase
+        .from("rifa_numeros")
+        .insert(numeros.slice(i, i + BLOQUE));
+
+      if (error) {
+        alert("Error creando números: " + error.message);
+        return;
+      }
+    }
+
+    // ==============================
+    // ✅ FINAL
+    // ==============================
+    alert("Rifa creada con todos sus números");
 
     form.reset();
     modalRifa.classList.remove("active");

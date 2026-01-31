@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Dashboard</title>
+
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/numeros.css">
-
 </head>
 <body>
 
@@ -23,35 +23,25 @@
 
     <!-- ACCIONES PRINCIPALES -->
     <section class="actions">
-
-      <!-- Crear rifa -->
-      <button
-        id="btnCrearRifa"
-        class="primary-btn"
-      >
+      <button id="btnCrearRifa" class="primary-btn">
         ➕ Crear rifa
       </button>
 
-      <!-- Mis rifas -->
-      <button
-        id="btnMisRifas"
-        class="card"
-      >
+      <button id="btnMisRifas" class="card">
         📋 Mis rifas
       </button>
 
-      <!-- Configuración -->
-      <button
-        id="btnConfiguracion"
-        class="card"
-      >
+      <button id="btnConfiguracion" class="card">
         ⚙️ Configuración
       </button>
-
     </section>
 
-    <!-- SECCIÓN DINÁMICA (MIS RIFAS / CONFIGURACIÓN) -->
-    <!-- Aquí luego renderizamos vistas sin cambiar de página -->
+    <!-- SECCIÓN DINÁMICA -->
+    <!-- AQUÍ se renderiza TODO:
+         - lista de rifas
+         - números
+         - panel de acciones
+         - configuración -->
     <section id="dynamicSection"></section>
 
   </main>
@@ -64,60 +54,31 @@
 
       <form id="crearRifaForm">
 
-        <input
-          type="text"
-          id="titulo"
-          placeholder="Nombre de la rifa"
-          required
-        >
-
-        <textarea
-          id="descripcion"
-          placeholder="Descripción (opcional)"
-        ></textarea>
-
-        <input
-          type="number"
-          id="precio"
-          placeholder="Valor por número"
-          required
-        >
-
-        <input
-          type="datetime-local"
-          id="fechaCierre"
-        >
+        <input type="text" id="titulo" placeholder="Nombre de la rifa" required>
+        <textarea id="descripcion" placeholder="Descripción (opcional)"></textarea>
+        <input type="number" id="precio" placeholder="Valor por número" required>
+        <input type="datetime-local" id="fechaCierre">
 
         <h4>Cantidad de cifras</h4>
 
-        <!-- 2 cifras -->
         <label class="radio-option">
           <input type="radio" name="cifras" value="2" checked>
           <span>2 cifras — 100 números (00 - 99)</span>
         </label>
 
-        <!-- 3 cifras -->
         <label class="radio-option">
           <input type="radio" name="cifras" value="3">
           <span>3 cifras — 1000 números (000 - 999)</span>
         </label>
 
-        <!-- 4 cifras -->
         <label class="radio-option">
           <input type="radio" name="cifras" value="4">
           <span>4 cifras — 10.000 números (0000 - 9999)</span>
         </label>
 
         <div class="modal-actions">
-          <button type="submit" class="primary-btn">
-            Crear rifa
-          </button>
-
-          <button
-            type="button"
-            id="cerrarModal"
-            class="secondary-btn"
-          >
+          <button type="submit" class="primary-btn">Crear rifa</button>
+          <button type="button" id="cerrarModal" class="secondary-btn">
             Cancelar
           </button>
         </div>
@@ -126,12 +87,10 @@
     </div>
   </div>
 
-  <!-- FOOTER PUBLICIDAD -->
+  <!-- FOOTER -->
   <footer class="ad-footer" id="adFooter">
     <span>Publicidad</span>
-    <div class="ad-content">
-      Tu anuncio aquí
-    </div>
+    <div class="ad-content">Tu anuncio aquí</div>
   </footer>
 
   <!-- SCRIPTS -->

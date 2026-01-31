@@ -305,3 +305,85 @@ body {
   color: #888;
   font-size: 14px;
 }
+
+/* ============================= */
+/* coor estados */
+/* ============================= */
+.numero-box.seleccionado {
+  outline: 3px solid #1e90ff;
+}
+
+.estado-libre {
+  background: white;
+}
+
+.estado-reservado {
+  background: #f1c40f;
+  color: black;
+}
+
+.estado-pagado {
+  background: #2ecc71;
+  color: white;
+}
+
+/* ============================= */
+/* PANEL DE ACCIONES NUMEROS */
+/* ============================= */
+
+.acciones-panel {
+  position: fixed;
+  bottom: 80px; /* arriba del footer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 600px;
+
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 12px;
+
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 2000;
+}
+
+#contadorSeleccion {
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Inputs */
+.acciones-panel input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Radios */
+.estado-opciones {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+.estado-opciones label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Botones */
+.acciones-botones {
+  display: flex;
+  gap: 10px;
+}
+
+.acciones-botones button {
+  flex: 1;
+}
+
+.acciones-panel.hidden {
+  display: none !important;
+}
