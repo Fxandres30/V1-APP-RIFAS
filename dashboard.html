@@ -4,47 +4,137 @@
   <meta charset="UTF-8">
   <title>Dashboard</title>
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/numeros.css">
+
 </head>
 <body>
 
+  <!-- TOP BAR -->
   <header class="topbar">
     <h1>Panel</h1>
     <button id="logoutBtn">Cerrar sesión</button>
   </header>
 
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="container">
+
+    <!-- BIENVENIDA -->
     <h2 id="welcomeText">Bienvenido</h2>
 
-    <div class="actions">
-      <button id="btnCrearRifa">➕ Crear rifa</button>
+    <!-- ACCIONES PRINCIPALES -->
+    <section class="actions">
 
-<!-- FORMULARIO (OCULTO AL INICIO) -->
-<div id="crearRifaBox" style="display:none; margin-top:20px;">
-  <h3>Nueva rifa</h3>
+      <!-- Crear rifa -->
+      <button
+        id="btnCrearRifa"
+        class="primary-btn"
+      >
+        ➕ Crear rifa
+      </button>
 
-  <form id="crearRifaForm">
-    <input type="text" id="titulo" placeholder="Nombre de la rifa" required>
-    <textarea id="descripcion" placeholder="Descripción"></textarea>
-    <input type="number" id="precio" placeholder="Valor por número" required>
-    <input type="number" id="total" placeholder="Cantidad de números" required>
-    <input type="datetime-local" id="fechaCierre">
+      <!-- Mis rifas -->
+      <button
+        id="btnMisRifas"
+        class="card"
+      >
+        📋 Mis rifas
+      </button>
 
-    <button type="submit">Guardar rifa</button>
-  </form>
-</div>
+      <!-- Configuración -->
+      <button
+        id="btnConfiguracion"
+        class="card"
+      >
+        ⚙️ Configuración
+      </button>
 
-      <button class="card">📋 Mis rifas</button>
-      <button class="card">⚙️ Configuración</button>
-    </div>
+    </section>
+
+    <!-- SECCIÓN DINÁMICA (MIS RIFAS / CONFIGURACIÓN) -->
+    <!-- Aquí luego renderizamos vistas sin cambiar de página -->
+    <section id="dynamicSection"></section>
+
   </main>
-  
-  <footer class="ad-footer" id="adFooter">
-  <span>Publicidad</span>
-  <div class="ad-content">
-    Tu anuncio aquí
-  </div>
-</footer>
 
+  <!-- MODAL CREAR RIFA -->
+  <div id="modalRifa" class="modal">
+    <div class="modal-content">
+
+      <h2>Crear nueva rifa</h2>
+
+      <form id="crearRifaForm">
+
+        <input
+          type="text"
+          id="titulo"
+          placeholder="Nombre de la rifa"
+          required
+        >
+
+        <textarea
+          id="descripcion"
+          placeholder="Descripción (opcional)"
+        ></textarea>
+
+        <input
+          type="number"
+          id="precio"
+          placeholder="Valor por número"
+          required
+        >
+
+        <input
+          type="datetime-local"
+          id="fechaCierre"
+        >
+
+        <h4>Cantidad de cifras</h4>
+
+        <!-- 2 cifras -->
+        <label class="radio-option">
+          <input type="radio" name="cifras" value="2" checked>
+          <span>2 cifras — 100 números (00 - 99)</span>
+        </label>
+
+        <!-- 3 cifras -->
+        <label class="radio-option">
+          <input type="radio" name="cifras" value="3">
+          <span>3 cifras — 1000 números (000 - 999)</span>
+        </label>
+
+        <!-- 4 cifras -->
+        <label class="radio-option">
+          <input type="radio" name="cifras" value="4">
+          <span>4 cifras — 10.000 números (0000 - 9999)</span>
+        </label>
+
+        <div class="modal-actions">
+          <button type="submit" class="primary-btn">
+            Crear rifa
+          </button>
+
+          <button
+            type="button"
+            id="cerrarModal"
+            class="secondary-btn"
+          >
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER PUBLICIDAD -->
+  <footer class="ad-footer" id="adFooter">
+    <span>Publicidad</span>
+    <div class="ad-content">
+      Tu anuncio aquí
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
   <script type="module" src="js/dashboard/dashboard.js"></script>
   <script type="module" src="js/dashboard/crearRifa.js"></script>
 

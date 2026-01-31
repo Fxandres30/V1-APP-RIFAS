@@ -1,0 +1,29 @@
+/* ============================= */
+/* TABLA DE NÚMEROS */
+/* ============================= */
+.numeros-wrapper {
+  margin-top: 20px;
+}
+
+.numeros-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 8px;
+}
+
+.numero-box {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 0;
+  text-align: center;
+  font-family: monospace;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.numero-box:hover {
+  background: #f1f2f6;
+  transform: scale(1.03);
+}
