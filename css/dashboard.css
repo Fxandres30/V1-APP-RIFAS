@@ -283,3 +283,25 @@ body {
 .btn-ver:hover {
   opacity: 0.9;
 }
+
+/* ============================= */
+/* boton configuracion*/
+/* ============================= */
+
+.config-section {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.config-section h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.disabled-text {
+  color: #888;
+  font-size: 14px;
+}
