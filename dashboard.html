@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <h1>Panel</h1>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </header>
+
+  <main class="container">
+    <h2 id="welcomeText">Bienvenido</h2>
+
+    <div class="actions">
+      <button id="btnCrearRifa">➕ Crear rifa</button>
+
+<!-- FORMULARIO (OCULTO AL INICIO) -->
+<div id="crearRifaBox" style="display:none; margin-top:20px;">
+  <h3>Nueva rifa</h3>
+
+  <form id="crearRifaForm">
+    <input type="text" id="titulo" placeholder="Nombre de la rifa" required>
+    <textarea id="descripcion" placeholder="Descripción"></textarea>
+    <input type="number" id="precio" placeholder="Valor por número" required>
+    <input type="number" id="total" placeholder="Cantidad de números" required>
+    <input type="datetime-local" id="fechaCierre">
+
+    <button type="submit">Guardar rifa</button>
+  </form>
+</div>
+
+      <button class="card">📋 Mis rifas</button>
+      <button class="card">⚙️ Configuración</button>
+    </div>
+  </main>
+  
+  <footer class="ad-footer" id="adFooter">
+  <span>Publicidad</span>
+  <div class="ad-content">
+    Tu anuncio aquí
+  </div>
+</footer>
+
+  <script type="module" src="js/dashboard/dashboard.js"></script>
+  <script type="module" src="js/dashboard/crearRifa.js"></script>
+
+</body>
+</html>
