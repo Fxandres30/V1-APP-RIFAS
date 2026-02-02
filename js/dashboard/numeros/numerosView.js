@@ -16,22 +16,43 @@ export async function cargarVistaNumeros(rifa) {
     return;
   }
 
-  let html = `
+  // 👉 HTML COMPLETO DE LA VISTA
+  dynamicSection.innerHTML = `
     <h3>Números rifa ${String(rifa.numero_rifa).padStart(9, "0")}</h3>
-    <div id="accionesContainer"></div>
-    <div class="numeros-grid">
+
+    <!-- PANEL (OCULTO AL INICIO) -->
+    <div id="accionesNumeros" class="acciones-panel hidden">
+      <p id="contadorSeleccion">0 seleccionados</p>
+
+      <input id="nombreCliente" placeholder="Nombre del cliente" />
+      <input id="telefonoCliente" placeholder="Teléfono" />
+
+      <div class="estado-opciones">
+        <label><input type="radio" name="estadoNumero" value="reservado" checked /> Reservado</label>
+        <label><input type="radio" name="estadoNumero" value="pagado" /> Pagado</label>
+        <label><input type="radio" name="estadoNumero" value="libre" /> Libre</label>
+      </div>
+
+      <div class="acciones-botones">
+        <button id="guardarCambios" class="primary-btn">Guardar cambios</button>
+        <button id="cancelarSeleccion" class="secondary-btn">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- TABLERO -->
+    <div class="numeros-grid"></div>
   `;
 
+  const grid = document.querySelector(".numeros-grid");
+
   numeros.forEach((n) => {
-    html += `
-      <div class="numero-box estado-${n.estado}" data-id="${n.id}">
-        ${n.numero}
-      </div>
-    `;
+    const div = document.createElement("div");
+    div.className = `numero-box estado-${n.estado}`;
+    div.dataset.id = n.id;
+    div.textContent = n.numero;
+    grid.appendChild(div);
   });
 
-  html += "</div>";
-  dynamicSection.innerHTML = html;
-
+  // 👉 SOLO lógica aquí
   initAccionesNumeros(rifa);
 }

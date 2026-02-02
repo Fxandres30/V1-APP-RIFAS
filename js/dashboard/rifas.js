@@ -1,7 +1,6 @@
 import { supabase, session } from "./dashboard.js";
 import { cargarVistaNumeros } from "./numeros/numerosView.js";
 
-
 const btnMisRifas = document.getElementById("btnMisRifas");
 const dynamicSection = document.getElementById("dynamicSection");
 
@@ -16,8 +15,8 @@ if (btnMisRifas && dynamicSection) {
       .order("created_at", { ascending: false });
 
     if (error) {
-      dynamicSection.innerHTML = "<p>Error al cargar rifas</p>";
       console.error(error);
+      dynamicSection.innerHTML = "<p>Error al cargar rifas</p>";
       return;
     }
 
@@ -60,10 +59,13 @@ if (btnMisRifas && dynamicSection) {
     html += "</tbody></table>";
     dynamicSection.innerHTML = html;
 
+    // 🔗 Botones "Ver números"
     document.querySelectorAll(".btn-ver").forEach((btn) => {
       btn.addEventListener("click", () => {
         const rifa = rifas.find(r => r.id === btn.dataset.id);
-        if (rifa) cargarVistaNumeros(rifa);
+        if (rifa) {
+          cargarVistaNumeros(rifa);
+        }
       });
     });
   });

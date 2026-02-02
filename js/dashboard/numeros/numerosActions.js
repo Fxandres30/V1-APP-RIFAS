@@ -7,61 +7,13 @@ export function initAccionesNumeros(rifa) {
   rifaActual = rifa;
   seleccionados = [];
 
-  const panel = document.getElementById("accionesContainer");
-
-  panel.innerHTML = `
-  <div class="acciones-panel hidden" id="accionesNumeros">
-
-    <p id="contadorSeleccion">0 seleccionados</p>
-
-    <input
-      type="text"
-      id="nombreCliente"
-      placeholder="Nombre del cliente"
-    />
-
-    <input
-      type="text"
-      id="telefonoCliente"
-      placeholder="Teléfono"
-    />
-
-    <div class="estado-opciones">
-      <label>
-        <input type="radio" name="estadoNumero" value="reservado" checked />
-        Reservado
-      </label>
-
-      <label>
-        <input type="radio" name="estadoNumero" value="pagado" />
-        Pagado
-      </label>
-
-      <label>
-        <input type="radio" name="estadoNumero" value="libre" />
-        Libre
-      </label>
-    </div>
-
-    <div class="acciones-botones">
-      <button id="guardarCambios" class="primary-btn">
-        Guardar cambios
-      </button>
-
-      <button id="cancelarSeleccion" class="secondary-btn">
-        Cancelar
-      </button>
-    </div>
-
-  </div>
-`;
-
-  activarSeleccion();
-}
-
-function activarSeleccion() {
   const panel = document.getElementById("accionesNumeros");
   const contador = document.getElementById("contadorSeleccion");
+  const btnGuardar = document.getElementById("guardarCambios");
+  const btnCancelar = document.getElementById("cancelarSeleccion");
+
+  panel.classList.add("hidden");
+  contador.textContent = "0 seleccionados";
 
   document.querySelectorAll(".numero-box").forEach((box) => {
     box.addEventListener("click", () => {
@@ -82,5 +34,35 @@ function activarSeleccion() {
         panel.classList.add("hidden");
       }
     });
+  });
+
+  btnCancelar.addEventListener("click", () => {
+    seleccionados = [];
+    document.querySelectorAll(".numero-box")
+      .forEach(b => b.classList.remove("seleccionado"));
+    panel.classList.add("hidden");
+  });
+
+  btnGuardar.addEventListener("click", async () => {
+    if (seleccionados.length === 0) return;
+
+    const estado = document.querySelector(
+      'input[name="estadoNumero"]:checked'
+    ).value;
+
+    const nombre = document.getElementById("nombreCliente").value || null;
+    const telefono = document.getElementById("telefonoCliente").value || null;
+
+    for (const id of seleccionados) {
+      await supabase
+        .from("rifa_numeros")
+        .update({ estado, nombre, telefono })
+        .eq("id", id);
+    }
+
+    // Reset
+    seleccionados = [];
+    panel.classList.add("hidden");
+    cargarVistaNumeros(rifaActual);
   });
 }
