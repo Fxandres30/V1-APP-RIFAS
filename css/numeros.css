@@ -11,7 +11,7 @@
 .numeros-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: 8px;
+  gap: 3px;
 
   max-width: 520px;     /* 🔥 no se estira */
   margin: 20px auto;    /* centrado */
@@ -72,25 +72,26 @@
 }
 
 /* ============================= */
-/* PANEL DE ACCIONES (NO ESTORBA) */
+/* PANEL DE ACCIONES (CORRECTO) */
 /* ============================= */
 
-/* CONTENEDOR DE LA VISTA DE NÚMEROS */
-/* PANEL DE ACCIONES */
 .acciones-panel {
-  position: relative;   /* 🔥 CAMBIO CLAVE */
-  
+  /* ❌ nada de fixed / absolute */
+  position: relative;
+
+  /* 🔥 MISMO ANCHO QUE LA TABLA */
+  max-width: 520px;
+  width: 100%;
+
+  margin: 0 auto 12px;   /* 🔥 centrado y empuja contenido */
+  padding: 15px;
+
   background: #ffffff;
   border: 1px solid #ddd;
   border-radius: 12px;
 
-  padding: 15px;
-  margin: 0 auto 1px;
-
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
-
-
 
 .acciones-panel.hidden {
   display: none;
@@ -107,7 +108,6 @@
   width: 100%;
   padding: 8px;
   margin-bottom: 8px;
-
   border-radius: 6px;
   border: 1px solid #ccc;
 }
@@ -129,4 +129,145 @@
 
 .acciones-botones button {
   flex: 1;
+}
+
+/* ============================= */
+/* LEYENDA DE ESTADOS */
+/* ============================= */
+
+.leyenda-estados {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+
+  margin: 15px auto 10px;
+  max-width: 520px;
+  font-size: 13px;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Bolitas */
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Colores */
+.dot.libre {
+  background: #ffffff;
+  border: 1px solid #999;
+}
+
+.dot.reservado {
+  background: #f1c40f;
+}
+
+.dot.pagado {
+  background: #2ecc71;
+}
+
+
+/* ============================= */
+/* BOTONES DE FILTRO */
+/* ============================= */
+
+.filtros-numeros {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  margin: 10px auto 20px;
+  max-width: 520px;
+}
+
+.filtro-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: #f5f6fa;
+  cursor: pointer;
+
+  transition: background 0.2s, transform 0.15s;
+}
+
+.filtro-btn:hover {
+  background: #eaeaea;
+  transform: translateY(-1px);
+}
+
+
+
+
+
+
+/* BOTÓN SUPERIOR */
+.top-filtro {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* BOTONES LISTA */
+.filtros-lista {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.lista-btn {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.lista-btn.activo {
+  background: #1e90ff;
+  color: #fff;
+  border-color: #1e90ff;
+}
+
+/* LISTA */
+.lista-numeros {
+  max-width: 520px;
+  margin: 0 auto 40px;
+}
+
+.detalle-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.detalle-table th,
+.detalle-table td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+}
+
+.detalle-table th {
+  background: #f5f6fa;
+}
+
+/* estados */
+.detalle-table .estado.reservado {
+  color: #f1c40f;
+  font-weight: bold;
+}
+
+.detalle-table .estado.pagado {
+  color: #2ecc71;
+  font-weight: bold;
 }

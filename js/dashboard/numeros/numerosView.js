@@ -16,11 +16,13 @@ export async function cargarVistaNumeros(rifa) {
     return;
   }
 
-  // 👉 HTML COMPLETO DE LA VISTA
+  // ==============================
+  // 🧱 VISTA COMPLETA
+  // ==============================
   dynamicSection.innerHTML = `
     <h3>Números rifa ${String(rifa.numero_rifa).padStart(9, "0")}</h3>
 
-    <!-- PANEL (OCULTO AL INICIO) -->
+    <!-- PANEL DE ACCIONES -->
     <div id="accionesNumeros" class="acciones-panel hidden">
       <p id="contadorSeleccion">0 seleccionados</p>
 
@@ -39,13 +41,55 @@ export async function cargarVistaNumeros(rifa) {
       </div>
     </div>
 
+    <!-- BOTÓN SUPERIOR (PREMIUM) -->
+    <div class="top-filtro">
+      <button class="premium-btn" disabled>
+        Solo disponibles ⭐
+      </button>
+    </div>
+
     <!-- TABLERO -->
-    <div class="numeros-grid"></div>
+    <div class="numeros-wrapper">
+      <div class="numeros-grid"></div>
+    </div>
+
+    <!-- LEYENDA -->
+    <div class="leyenda-estados">
+      <div class="leyenda-item"><span class="dot libre"></span> Disponible</div>
+      <div class="leyenda-item"><span class="dot reservado"></span> Reservado</div>
+      <div class="leyenda-item"><span class="dot pagado"></span> Pagado</div>
+    </div>
+
+    <!-- FILTROS SOLO PARA LISTA -->
+    <div class="filtros-lista">
+      <button class="lista-btn activo" data-estado="todos">Todos</button>
+      <button class="lista-btn" data-estado="libre">Disponibles</button>
+      <button class="lista-btn" data-estado="reservado">Reservados</button>
+      <button class="lista-btn" data-estado="pagado">Pagados</button>
+    </div>
+
+    <!-- LISTA TIPO SUPABASE -->
+    <div class="lista-numeros">
+      <table class="detalle-table">
+        <thead>
+          <tr>
+            <th>Número</th>
+            <th>Estado</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+          </tr>
+        </thead>
+        <tbody id="detalleNumeros"></tbody>
+      </table>
+    </div>
   `;
 
+  // ==============================
+  // 🔢 RENDER TABLERO (NO SE FILTRA)
+  // ==============================
   const grid = document.querySelector(".numeros-grid");
 
-  numeros.forEach((n) => {
+  numeros.forEach(n => {
     const div = document.createElement("div");
     div.className = `numero-box estado-${n.estado}`;
     div.dataset.id = n.id;
@@ -53,6 +97,45 @@ export async function cargarVistaNumeros(rifa) {
     grid.appendChild(div);
   });
 
-  // 👉 SOLO lógica aquí
+  // ==============================
+  // 📋 LISTA (FILTRABLE)
+  // ==============================
+  const tbody = document.getElementById("detalleNumeros");
+
+  function renderLista(filtro = "todos") {
+    tbody.innerHTML = "";
+
+    numeros.forEach(n => {
+      if (filtro !== "todos" && n.estado !== filtro) return;
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${n.numero}</td>
+        <td class="estado ${n.estado}">${n.estado}</td>
+        <td>${n.nombre || "-"}</td>
+        <td>${n.telefono || "-"}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  renderLista();
+
+  // ==============================
+  // 🎛️ BOTONES DE LISTA
+  // ==============================
+  document.querySelectorAll(".lista-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".lista-btn")
+        .forEach(b => b.classList.remove("activo"));
+
+      btn.classList.add("activo");
+      renderLista(btn.dataset.estado);
+    });
+  });
+
+  // ==============================
+  // 🔗 LÓGICA DE SELECCIÓN
+  // ==============================
   initAccionesNumeros(rifa);
 }
