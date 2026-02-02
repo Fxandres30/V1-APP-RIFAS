@@ -1,30 +1,42 @@
 /* ============================= */
 /* TABLA DE NÚMEROS */
 /* ============================= */
+
 .numeros-wrapper {
-  margin-top: 20px;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
+/* Grid SIEMPRE en cuadro */
 .numeros-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: 8px;
 
-  max-width: 520px;   /* 🔥 CLAVE */
-  margin: 20px auto;  /* centra */
+  max-width: 520px;     /* 🔥 no se estira */
+  margin: 20px auto;    /* centrado */
 }
 
+/* ============================= */
+/* CAJAS DE NÚMEROS */
+/* ============================= */
 
 .numero-box {
-  aspect-ratio: 1 / 1;   /* 🔥 siempre cuadrado */
+  aspect-ratio: 1 / 1;          /* 🔥 siempre cuadrado */
   display: flex;
   align-items: center;
   justify-content: center;
 
+  padding: 8px;
   border-radius: 6px;
   font-size: 13px;
-}
 
+  cursor: pointer;
+  user-select: none;
+
+  border: 1px solid #ccc;
+  transition: background 0.2s, transform 0.15s;
+}
 
 .numero-box:hover {
   background: #f1f2f6;
@@ -34,15 +46,6 @@
 /* ============================= */
 /* ESTADOS DE LOS NÚMEROS */
 /* ============================= */
-
-.numero-box {
-  padding: 8px;
-  border-radius: 6px;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  user-select: none;
-}
 
 /* Libre */
 .estado-libre {
@@ -65,25 +68,35 @@
 /* Seleccionado (encima del estado) */
 .numero-box.seleccionado {
   outline: 3px solid #1e90ff;
+  outline-offset: -2px;
 }
 
-
 /* ============================= */
-/* PANEL DE ACCIONES (NUMEROS) */
+/* PANEL DE ACCIONES (NO ESTORBA) */
 /* ============================= */
 
+/* CONTENEDOR DE LA VISTA DE NÚMEROS */
+/* PANEL DE ACCIONES */
 .acciones-panel {
-  background: #f9f9f9;
+  position: relative;   /* 🔥 CAMBIO CLAVE */
+  
+  background: #ffffff;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 12px;
+
   padding: 15px;
-  margin-bottom: 15px;
+  margin: 0 auto 1px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
+
+
 
 .acciones-panel.hidden {
   display: none;
 }
 
+/* Contador */
 #contadorSeleccion {
   font-weight: bold;
   margin-bottom: 10px;
@@ -94,6 +107,7 @@
   width: 100%;
   padding: 8px;
   margin-bottom: 8px;
+
   border-radius: 6px;
   border: 1px solid #ccc;
 }
@@ -103,12 +117,14 @@
   display: flex;
   gap: 15px;
   margin: 10px 0;
+  font-size: 14px;
 }
 
 /* Botones */
 .acciones-botones {
   display: flex;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .acciones-botones button {
