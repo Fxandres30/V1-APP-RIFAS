@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Dashboard</title>
 
+  <link rel="stylesheet" href="css/mensajes.css">
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/numeros.css">
 </head>
@@ -23,28 +24,16 @@
 
     <!-- ACCIONES PRINCIPALES -->
     <section class="actions">
-      <button id="btnCrearRifa" class="primary-btn">
-        ➕ Crear rifa
-      </button>
+  <button id="btnCrearRifa" class="primary-btn">➕ Crear rifa</button>
 
-      <button id="btnMisRifas" class="card">
-        📋 Mis rifas
-      </button>
+  <button id="btnMisRifas" class="card">📋 Mis rifas</button>
 
-      <button id="btnConfiguracion" class="card">
-        📩 Mensajes 
-      </button>
+  <button id="btnMensajes" class="card">📩 Mensajes</button>
 
-      <button id="btnConfiguracion" class="card">
-        Horario de juegos
-      </button>
+  <button id="btnHorarios" class="card">⏰ Horario de juegos</button>
 
-      <button id="btnConfiguracion" class="card">
-        ⚙️ Configuración
-      </button>
-
-    </section>
-
+  <button id="btnConfiguracion" class="card">⚙️ Configuración</button>
+</section>
     <!-- SECCIÓN DINÁMICA -->
     <!-- AQUÍ se renderiza TODO:
          - lista de rifas
@@ -108,6 +97,8 @@
   <script type="module" src="js/dashboard/rifas.js"></script>
   <script type="module" src="js/dashboard/crearRifa.js"></script>
   <script type="module" src="js/dashboard/configuracion.js"></script>
+  <script type="module" src="js/dashboard/mensajes.js"></script>
+  <script type="module" src="js/dashboard/horarios.js"></script>
 
 </body>
 </html>

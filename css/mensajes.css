@@ -1,0 +1,203 @@
+/* ============================= */
+/* VISTA MENSAJES */
+/* ============================= */
+
+.mensaje-form {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 700px;
+  margin: 15px auto 25px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inputs */
+.mensaje-form input,
+.mensaje-form textarea,
+.mensaje-form select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.mensaje-form textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Botón guardar */
+.mensaje-form button {
+  align-self: flex-end;
+}
+
+/* ============================= */
+/* LISTA DE MENSAJES */
+/* ============================= */
+
+.mensajes-lista {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Item de mensaje */
+.mensaje-item {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.mensaje-item:hover {
+  background: #f5f6fa;
+  transform: translateY(-2px);
+}
+
+/* Título */
+.mensaje-titulo {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+/* Categoría */
+.mensaje-categoria {
+  font-size: 12px;
+  color: #666;
+}
+
+/* ============================= */
+/* ESTADOS / UTILIDADES */
+/* ============================= */
+
+.mensaje-item.favorito {
+  border-left: 5px solid #f1c40f;
+}
+
+@media (max-width: 600px) {
+  .mensaje-form,
+  .mensajes-lista {
+    margin: 10px;
+  }
+}
+
+/* ============================= */
+/* LISTA */
+/* ============================= */
+
+.mensajes-lista {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* ============================= */
+/* ITEM */
+/* ============================= */
+
+.mensaje-item {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.mensaje-item:hover {
+  background: #f8f9fb;
+}
+
+/* ============================= */
+/* HEADER */
+/* ============================= */
+
+.mensaje-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.mensaje-textos {
+  flex: 1;
+}
+
+/* TÍTULO */
+.mensaje-titulo {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+/* PREVIEW */
+.mensaje-preview {
+  font-size: 13px;
+  color: #666;
+}
+
+/* ============================= */
+/* BOTÓN COPIAR */
+/* ============================= */
+
+.copiar {
+  background: #1e90ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.copiar:hover {
+  opacity: 0.9;
+}
+
+.copiar:disabled {
+  background: #2ecc71;
+  cursor: default;
+}
+
+/* ============================= */
+/* CONTENIDO COMPLETO */
+/* ============================= */
+
+.mensaje-contenido {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #f5f6fa;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* OCULTO */
+.hidden {
+  display: none;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 600px) {
+  .mensaje-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .copiar {
+    align-self: flex-end;
+  }
+}

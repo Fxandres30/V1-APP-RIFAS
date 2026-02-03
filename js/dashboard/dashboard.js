@@ -1,4 +1,6 @@
 import { supabase } from "../supabase.js";
+import { renderMensajesView } from "./mensajes/mensajesView.js";
+import { initMensajes } from "./mensajes/mensajesLogic.js";
 
 console.log("dashboard.js cargado");
 
@@ -31,6 +33,15 @@ if (logoutBtn) {
   logoutBtn.addEventListener("click", async () => {
     await supabase.auth.signOut();
     window.location.href = "index.html";
+  });
+}
+
+const btnMensajes = document.getElementById("btnMensajes");
+
+if (btnMensajes) {
+  btnMensajes.addEventListener("click", () => {
+    renderMensajesView();
+    initMensajes();
   });
 }
 

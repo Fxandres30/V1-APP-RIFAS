@@ -387,3 +387,62 @@ body {
 .acciones-panel.hidden {
   display: none !important;
 }
+
+/* ============================= */
+/* ESTILOS LOTERIAS Y CHANSES HORAS */
+/* ============================= */
+/* ============================= */
+/* HORARIOS */
+/* ============================= */
+
+.horarios-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* TÍTULOS */
+.horarios-box h4 {
+  margin: 25px 0 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  border-bottom: 2px solid #1e90ff;
+  padding-bottom: 4px;
+}
+
+/* ITEM */
+.juego-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* NOMBRE */
+.juego-nombre {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: #1e90ff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* BOLITA AZUL 🔵 */
+.juego-nombre .dot {
+  width: 8px;
+  height: 8px;
+  background: #1e90ff;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* HORARIOS */
+.juego-horario {
+  font-size: 13px;
+  color: #555;
+  margin-left: 16px;
+  line-height: 1.5;
+}
+
