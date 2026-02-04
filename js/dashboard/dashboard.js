@@ -25,6 +25,14 @@ if (welcomeText) {
   welcomeText.textContent = `Bienvenido, ${session.user.email}`;
 }
 
+const banner = document.createElement("div");
+banner.className = "referral-banner";
+banner.innerHTML = `
+  🎁 Invita a un amigo y desbloquea
+  <strong>7 días premium con anuncios</strong>
+`;
+document.querySelector(".container").prepend(banner);
+
 // ==============================
 // 🚪 LOGOUT
 // ==============================

@@ -475,3 +475,64 @@ body {
   line-height: 1.5;
 }
 
+/* ============================= */
+/* BARRAS DE PROGRESO */
+/* ============================= */
+
+.lista-referidos {
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ============================= */
+/* BANNER DE REFERIDOS */
+/* ============================= */
+
+.referral-banner {
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.referido-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.referido-item strong {
+  display: block;
+  font-size: 15px;
+}
+
+.referido-item small {
+  display: block;
+  margin: 4px 0;
+  color: #03278a;
+}
+
+.mini-barra {
+  height: 6px;
+  background: #b9b0b0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.mini-fill {
+  height: 100%;
+  background: #2ecc71;
+  width: 0;
+  transition: width 0.3s;
+}
+
+.estado-referral {
+  font-size: 12px;
+  color: #272424;
+}

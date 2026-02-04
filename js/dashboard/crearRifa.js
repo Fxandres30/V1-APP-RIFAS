@@ -1,6 +1,7 @@
 import { supabase } from "../supabase.js";
 import { validarCifrasPorPlan } from "../plans/planRules.js";
 import { calcularTotalNumeros } from "../utils/numeros.js";
+import { checkReferralReward } from "../referrals/checkReferralReward.js";
 
 // ==============================
 // 📄 ELEMENTOS
@@ -9,16 +10,36 @@ const form = document.getElementById("crearRifaForm");
 const modalRifa = document.getElementById("modalRifa");
 
 // ==============================
-// ⚙️ PLAN DEL USUARIO (FUTURO: profiles)
-// ==============================
-const userPlan = "free";
-
-// ==============================
 // 📝 SUBMIT FORM
 // ==============================
 if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    // ==============================
+    // 👤 SESIÓN
+    // ==============================
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      alert("Sesión no válida");
+      return;
+    }
+
+    // ==============================
+    // 📦 PERFIL / PLAN
+    // ==============================
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("plan")
+      .eq("id", session.user.id)
+      .single();
+
+    if (profileError || !profile) {
+      alert("No se pudo obtener el plan del usuario");
+      return;
+    }
+
+    const userPlan = profile.plan || "free";
 
     // ==============================
     // 📥 DATOS
@@ -55,16 +76,6 @@ if (form) {
     const totalNumeros = calcularTotalNumeros(cifras);
 
     // ==============================
-    // 👤 SESIÓN
-    // ==============================
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
-      alert("Sesión no válida");
-      return;
-    }
-
-    // ==============================
     // 💾 CREAR RIFA
     // ==============================
     const { data: rifa, error: rifaError } = await supabase
@@ -87,7 +98,7 @@ if (form) {
     }
 
     // ==============================
-    // 🔢 CREAR NÚMEROS (PRODUCCIÓN)
+    // 🔢 CREAR NÚMEROS
     // ==============================
     const numeros = [];
 
@@ -99,7 +110,7 @@ if (form) {
       });
     }
 
-    // Insertar en bloques (seguro)
+    // Insertar en bloques
     const BLOQUE = 500;
     for (let i = 0; i < numeros.length; i += BLOQUE) {
       const { error } = await supabase
@@ -113,9 +124,14 @@ if (form) {
     }
 
     // ==============================
+    // 🎁 VALIDAR REFERIDO (CLAVE)
+    // ==============================
+    await checkReferralReward(session.user.id);
+
+    // ==============================
     // ✅ FINAL
     // ==============================
-    alert("Rifa creada con todos sus números");
+    alert("Rifa creada correctamente");
 
     form.reset();
     modalRifa.classList.remove("active");
