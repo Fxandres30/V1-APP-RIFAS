@@ -1,37 +1,61 @@
+import { supabase, session } from "./dashboard.js";
+
 const btnConfiguracion = document.getElementById("btnConfiguracion");
 const dynamicSection = document.getElementById("dynamicSection");
 
-if (btnConfiguracion && dynamicSection) {
-  btnConfiguracion.addEventListener("click", () => {
+if (btnConfiguracion) {
+  btnConfiguracion.addEventListener("click", async () => {
+    dynamicSection.innerHTML = "<p>Cargando perfil...</p>";
+
+    const { data: profile, error } = await supabase
+      .from("profiles")
+      .select("name, email, referral_code, plan, plan_expires_at")
+      .eq("id", session.user.id)
+      .single();
+
+    if (error) {
+      console.error(error);
+      dynamicSection.innerHTML =
+        "<p>Error cargando perfil</p>";
+      return;
+    }
+
+    const linkReferido = `${window.location.origin}/register.html?ref=${profile.id}`;
+
     dynamicSection.innerHTML = `
       <h3>⚙️ Configuración</h3>
 
       <div class="config-section">
         <h4>👤 Perfil</h4>
-        <p>Nombre visible: <strong>Próximamente</strong></p>
-        <p>WhatsApp: <strong>No configurado</strong></p>
+        <p><strong>Nombre:</strong> ${profile.name}</p>
+        <p><strong>Email:</strong> ${profile.email}</p>
       </div>
 
       <div class="config-section">
-        <h4>📦 Plan</h4>
-        <p>Plan actual: <strong>Free</strong></p>
-        <button class="primary-btn" disabled>
-          Actualizar plan (próximamente)
+        <h4>🎁 Referidos</h4>
+        <p><strong>Código:</strong> ${profile.referral_code}</p>
+        <input value="${linkReferido}" readonly />
+        <button class="primary-btn" id="copiarLink">
+          Copiar link
         </button>
       </div>
 
       <div class="config-section">
-        <h4>🎨 Apariencia</h4>
-        <p class="disabled-text">
-          Personalización de colores disponible en planes superiores
-        </p>
-      </div>
-
-      <div class="config-section">
-        <h4>ℹ️ Información</h4>
-        <p>Versión: 1.0</p>
-        <p>Estado: En desarrollo</p>
+        <h4>📦 Plan</h4>
+        <p><strong>Plan actual:</strong> ${profile.plan}</p>
+        <p><strong>Vence:</strong> ${
+          profile.plan_expires_at
+            ? new Date(profile.plan_expires_at).toLocaleDateString()
+            : "Sin fecha"
+        }</p>
       </div>
     `;
+
+    document
+      .getElementById("copiarLink")
+      .addEventListener("click", () => {
+        navigator.clipboard.writeText(linkReferido);
+        alert("Link copiado");
+      });
   });
 }

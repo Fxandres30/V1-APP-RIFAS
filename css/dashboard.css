@@ -301,11 +301,40 @@ body {
   margin-bottom: 8px;
 }
 
-.disabled-text {
-  color: #888;
-  font-size: 14px;
+.ref-item {
+  margin-bottom: 15px;
 }
 
+.ref-row {
+  display: flex;
+  gap: 10px;
+}
+
+.ref-row input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+}
+
+.copy-btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  background: #1e90ff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  opacity: 0.9;
+}
+
+.muted {
+  font-size: 13px;
+  color: #666;
+}
 /* ============================= */
 /* coor estados */
 /* ============================= */
