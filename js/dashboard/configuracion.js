@@ -20,7 +20,7 @@ if (btnConfiguracion) {
       return;
     }
 
-    const linkReferido = `${window.location.origin}/register.html?ref=${profile.id}`;
+const linkReferido = `${window.location.origin}/register.html?ref=${profile.referral_code}`;
 
     dynamicSection.innerHTML = `
       <h3>⚙️ Configuración</h3>
